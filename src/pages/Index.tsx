@@ -8,15 +8,25 @@ import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
     setActiveSection(id);
+    setMobileMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/20">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/20 relative">
+      <div className="fixed inset-0 z-0 opacity-5 pointer-events-none">
+        <img 
+          src="https://cdn.poehali.dev/projects/88758f07-884e-4f13-86e1-d955377396e2/files/8aab610d-1a99-41eb-a667-a4a262ace7d6.jpg" 
+          alt="Background pattern" 
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="relative z-10">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-primary/10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-accent flex items-center gap-2">
             <Icon name="Sparkles" size={28} className="text-primary" />
@@ -41,7 +51,36 @@ const Index = () => {
               </button>
             ))}
           </div>
+          <button 
+            className="md:hidden text-accent"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <Icon name={mobileMenuOpen ? 'X' : 'Menu'} size={28} />
+          </button>
         </div>
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border">
+            <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+              {['home', 'about', 'spiritualism', 'tarot', 'reviews', 'faq', 'contact'].map((section) => (
+                <button
+                  key={section}
+                  onClick={() => scrollToSection(section)}
+                  className={`text-left transition-all hover:text-accent ${
+                    activeSection === section ? 'text-accent font-semibold' : 'text-foreground/80'
+                  }`}
+                >
+                  {section === 'home' && 'Главная'}
+                  {section === 'about' && 'Обо мне'}
+                  {section === 'spiritualism' && 'Спиритизм'}
+                  {section === 'tarot' && 'Таро'}
+                  {section === 'reviews' && 'Отзывы'}
+                  {section === 'faq' && 'FAQ'}
+                  {section === 'contact' && 'Контакты'}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       <section id="home" className="relative pt-32 pb-20 px-4 overflow-hidden">
@@ -74,8 +113,14 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
+      <section className="py-16 px-4 relative">
+        <div className="absolute top-10 left-10 opacity-10 animate-float hidden lg:block">
+          <Icon name="Moon" size={120} className="text-primary" />
+        </div>
+        <div className="absolute bottom-10 right-10 opacity-10 animate-float hidden lg:block" style={{ animationDelay: '1s' }}>
+          <Icon name="Stars" size={100} className="text-accent" />
+        </div>
+        <div className="container mx-auto relative z-10">
           <h3 className="text-4xl font-bold text-center mb-12 text-accent">Духовные Практики</h3>
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -161,8 +206,16 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="spiritualism" className="py-20 px-4">
-        <div className="container mx-auto max-w-5xl">
+      <section id="spiritualism" className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-15">
+          <img 
+            src="https://cdn.poehali.dev/projects/88758f07-884e-4f13-86e1-d955377396e2/files/fe2cae5a-db18-4dd2-bad0-c066831d0dfd.jpg" 
+            alt="Spiritualism background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background"></div>
+        </div>
+        <div className="container mx-auto max-w-5xl relative z-10">
           <h3 className="text-4xl font-bold text-center mb-4 text-accent">Онлайн Сеансы Спиритизма</h3>
           <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
             Уникальная возможность стать участником спиритического сеанса не выходя из дома
@@ -243,12 +296,19 @@ const Index = () => {
               { name: 'Крест Кельтов', duration: '45 мин', price: 'от 5000₽', description: 'Глубокий анализ сложной ситуации' },
               { name: 'Годовой прогноз', duration: '60 мин', price: 'от 8000₽', description: 'Прогноз на 12 месяцев вперёд' }
             ].map((spread, index) => (
-              <Card key={index} className="bg-card/70 backdrop-blur border-border hover:border-accent/50 transition-all">
-                <CardHeader>
+              <Card key={index} className="bg-card/70 backdrop-blur border-border hover:border-accent/50 transition-all relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 opacity-10 group-hover:opacity-20 transition-opacity">
+                  <img 
+                    src="https://cdn.poehali.dev/projects/88758f07-884e-4f13-86e1-d955377396e2/files/53a4a7fb-7f22-493e-9d8a-14637b9e1dda.jpg" 
+                    alt="Tarot card" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <CardHeader className="relative z-10">
                   <CardTitle className="text-xl text-accent">{spread.name}</CardTitle>
                   <CardDescription className="text-muted-foreground">{spread.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative z-10">
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm text-foreground/80">
                       <Icon name="Clock" size={16} className="text-primary" />
@@ -350,13 +410,21 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-20 px-4">
-        <div className="container mx-auto max-w-2xl">
+      <section id="contact" className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-10">
+          <img 
+            src="https://cdn.poehali.dev/projects/88758f07-884e-4f13-86e1-d955377396e2/files/ea6725e6-6257-48b8-85ba-c083cbe37954.jpg" 
+            alt="Crystal ball background" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background"></div>
+        </div>
+        <div className="container mx-auto max-w-2xl relative z-10">
           <h3 className="text-4xl font-bold text-center mb-4 text-accent">Записаться на консультацию</h3>
           <p className="text-center text-muted-foreground mb-12">
             Заполните форму, и я свяжусь с вами в течение 24 часов
           </p>
-          <Card className="bg-card/70 backdrop-blur border-border">
+          <Card className="bg-card/70 backdrop-blur border-border shadow-xl shadow-primary/10">
             <CardContent className="pt-6">
               <form className="space-y-6">
                 <div>
@@ -435,6 +503,7 @@ const Index = () => {
           </p>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
