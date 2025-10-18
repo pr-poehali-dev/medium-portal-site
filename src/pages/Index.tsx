@@ -145,10 +145,31 @@ const Index = () => {
             ].map((service, index) => (
               <Card 
                 key={index} 
-                className="bg-card/50 backdrop-blur border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 group"
+                className="bg-card/50 backdrop-blur border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 group relative overflow-hidden"
               >
-                <CardHeader>
-                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none">
+                  <img 
+                    src="https://cdn.poehali.dev/projects/88758f07-884e-4f13-86e1-d955377396e2/files/fcf6b34d-67b9-4a91-973b-9bd374c56333.jpg" 
+                    alt="Tarot cards" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -top-20 -right-20 w-40 h-40 opacity-0 group-hover:opacity-30 transition-all duration-700 group-hover:rotate-12 pointer-events-none">
+                  <img 
+                    src="https://cdn.poehali.dev/projects/88758f07-884e-4f13-86e1-d955377396e2/files/53a4a7fb-7f22-493e-9d8a-14637b9e1dda.jpg" 
+                    alt="Tarot card" 
+                    className="w-full h-full object-cover rounded-lg shadow-2xl"
+                  />
+                </div>
+                <div className="absolute -bottom-20 -left-20 w-40 h-40 opacity-0 group-hover:opacity-30 transition-all duration-700 group-hover:-rotate-12 pointer-events-none" style={{ transitionDelay: '0.1s' }}>
+                  <img 
+                    src="https://cdn.poehali.dev/projects/88758f07-884e-4f13-86e1-d955377396e2/files/53a4a7fb-7f22-493e-9d8a-14637b9e1dda.jpg" 
+                    alt="Tarot card" 
+                    className="w-full h-full object-cover rounded-lg shadow-2xl"
+                  />
+                </div>
+                <CardHeader className="relative z-10">
+                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform group-hover:animate-glow">
                     <Icon name={service.icon as any} size={32} className="text-primary" />
                   </div>
                   <CardTitle className="text-2xl text-center text-accent">{service.title}</CardTitle>
@@ -156,7 +177,7 @@ const Index = () => {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative z-10">
                   <ul className="space-y-2">
                     {service.features.map((feature, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm text-foreground/80">

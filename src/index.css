@@ -103,4 +103,24 @@
   h6 {
     font-family: "Cinzel", serif;
   }
+
+  @keyframes card-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+
+  @keyframes mystical-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(155, 135, 245, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(155, 135, 245, 0.6);
+    }
+  }
 }
